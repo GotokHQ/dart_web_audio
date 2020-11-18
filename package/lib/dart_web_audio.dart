@@ -1,6 +1,7 @@
 @JS()
 library lib.dom.audio;
 
+import 'package:dart_webrtc/dart_webrtc.dart';
 import "package:js/js.dart";
 import "package:js/js_util.dart" show promiseToFuture;
 import "dart:typed_data" show Uint8List, Float32List, ByteBuffer;
@@ -1023,9 +1024,11 @@ abstract class AudioContext implements BaseAudioContext {
   external num get outputLatency;
 
   /// createMediaElementSource(mediaElement: HTMLMediaElement): MediaElementAudioSourceNode;
-  /// createMediaStreamDestination(): MediaStreamAudioDestinationNode;
-  /// createMediaStreamSource(mediaStream: MediaStream): MediaStreamAudioSourceNode;
-  /// createMediaStreamTrackSource(mediaStreamTrack: MediaStreamTrack): MediaStreamTrackAudioSourceNode;
+  external MediaStreamAudioDestinationNode createMediaStreamDestination();
+  external MediaStreamAudioSourceNode createMediaStreamSource(
+      MediaStreamJs mediaStream);
+  external MediaStreamTrackAudioSourceNode createMediaStreamTrackSource(
+      MediaStreamTrack mediaStreamTrack);
   external AudioTimestamp getOutputTimestamp();
   /*external void addEventListener<K extends keyof BaseAudioContextEventMap>(K type, dynamic listener(AudioContext JS$this, BaseAudioContextEventMap[K] ev), [bool|AddEventListenerOptions options]);*/
   /*external void addEventListener(String type, EventListener|EventListenerObject listener, [bool|AddEventListenerOptions options]);*/
@@ -1127,9 +1130,45 @@ abstract class AudioProcessingEventInit implements EventInit {
 }
 
 @JS()
+abstract class MediaStreamAudioDestinationNode implements AudioNode {
+  external MediaStreamJs get stream;
+  external factory MediaStreamAudioDestinationNode(AudioContext context,
+      [AudioNodeOptions options]);
+}
+
+@JS()
+abstract class MediaStreamAudioSourceNode implements AudioNode {
+  external MediaStreamJs get mediaStream;
+  external factory MediaStreamAudioSourceNode(
+      AudioContext context, MediaStreamAudioSourceOptions options);
+}
+
+@JS()
+abstract class MediaStreamTrackAudioSourceNode implements AudioNode {
+  external factory MediaStreamTrackAudioSourceNode(
+      AudioContext context, MediaStreamTrackAudioSourceOptions options);
+}
+
+@anonymous
+@JS()
+abstract class MediaStreamAudioSourceOptions {
+  external MediaStreamJs get mediaStream;
+  external set mediaStream(MediaStreamJs v);
+  external factory MediaStreamAudioSourceOptions({MediaStreamJs mediaStream});
+}
+
+@anonymous
+@JS()
+abstract class MediaStreamTrackAudioSourceOptions {
+  external MediaStreamTrack get mediaStreamTrack;
+  external set mediaStreamTrack(MediaStreamTrack v);
+  external factory MediaStreamTrackAudioSourceOptions(
+      {MediaStreamTrack mediaStreamTrack});
+}
+
+@JS()
 abstract class Promise<T> {
   external factory Promise(
       void executor(void resolve(T result), Function reject));
   external Promise then(void onFulfilled(T result), [Function onRejected]);
 }
-

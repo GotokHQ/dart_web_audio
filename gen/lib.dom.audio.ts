@@ -706,9 +706,9 @@ interface AudioContext extends BaseAudioContext {
     readonly outputLatency: number;
     close(): Promise<void>;
     // createMediaElementSource(mediaElement: HTMLMediaElement): MediaElementAudioSourceNode;
-    // createMediaStreamDestination(): MediaStreamAudioDestinationNode;
-    // createMediaStreamSource(mediaStream: MediaStream): MediaStreamAudioSourceNode;
-    // createMediaStreamTrackSource(mediaStreamTrack: MediaStreamTrack): MediaStreamTrackAudioSourceNode;
+    createMediaStreamDestination(): MediaStreamAudioDestinationNode;
+    createMediaStreamSource(mediaStream: MediaStream): MediaStreamAudioSourceNode;
+    createMediaStreamTrackSource(mediaStreamTrack: MediaStreamTrack): MediaStreamTrackAudioSourceNode;
     getOutputTimestamp(): AudioTimestamp;
     resume(): Promise<void>;
     suspend(): Promise<void>;
@@ -744,4 +744,39 @@ interface AudioProcessingEventInit extends EventInit {
     inputBuffer: AudioBuffer;
     outputBuffer: AudioBuffer;
     playbackTime: number;
+}
+
+interface MediaStreamAudioDestinationNode extends AudioNode {
+    readonly stream: MediaStream;
+}
+
+declare var MediaStreamAudioDestinationNode: {
+    prototype: MediaStreamAudioDestinationNode;
+    new(context: AudioContext, options?: AudioNodeOptions): MediaStreamAudioDestinationNode;
+};
+
+/** A type of AudioNode which operates as an audio source whose media is received from a MediaStream obtained using the WebRTC or Media Capture and Streams APIs. */
+interface MediaStreamAudioSourceNode extends AudioNode {
+    readonly mediaStream: MediaStream;
+}
+
+declare var MediaStreamAudioSourceNode: {
+    prototype: MediaStreamAudioSourceNode;
+    new(context: AudioContext, options: MediaStreamAudioSourceOptions): MediaStreamAudioSourceNode;
+};
+
+interface MediaStreamTrackAudioSourceNode extends AudioNode {
+}
+
+declare var MediaStreamTrackAudioSourceNode: {
+    prototype: MediaStreamTrackAudioSourceNode;
+    new(context: AudioContext, options: MediaStreamTrackAudioSourceOptions): MediaStreamTrackAudioSourceNode;
+};
+
+interface MediaStreamAudioSourceOptions {
+    mediaStream: MediaStream;
+}
+
+interface MediaStreamTrackAudioSourceOptions {
+    mediaStreamTrack: MediaStreamTrack;
 }
