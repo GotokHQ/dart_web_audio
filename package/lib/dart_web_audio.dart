@@ -1,7 +1,8 @@
 @JS()
 library lib.dom.audio;
 
-import 'package:dart_webrtc/dart_webrtc.dart';
+import 'dart:html';
+
 import "package:js/js.dart";
 import "package:js/js_util.dart" show promiseToFuture;
 import "dart:typed_data" show Uint8List, Float32List, ByteBuffer;
@@ -1026,7 +1027,7 @@ abstract class AudioContext implements BaseAudioContext {
   /// createMediaElementSource(mediaElement: HTMLMediaElement): MediaElementAudioSourceNode;
   external MediaStreamAudioDestinationNode createMediaStreamDestination();
   external MediaStreamAudioSourceNode createMediaStreamSource(
-      MediaStreamJs mediaStream);
+      MediaStream mediaStream);
   external MediaStreamTrackAudioSourceNode createMediaStreamTrackSource(
       MediaStreamTrack mediaStreamTrack);
   external AudioTimestamp getOutputTimestamp();
@@ -1131,14 +1132,14 @@ abstract class AudioProcessingEventInit implements EventInit {
 
 @JS()
 abstract class MediaStreamAudioDestinationNode implements AudioNode {
-  external MediaStreamJs get stream;
+  external MediaStream get stream;
   external factory MediaStreamAudioDestinationNode(AudioContext context,
       [AudioNodeOptions options]);
 }
 
 @JS()
 abstract class MediaStreamAudioSourceNode implements AudioNode {
-  external MediaStreamJs get mediaStream;
+  external MediaStream get mediaStream;
   external factory MediaStreamAudioSourceNode(
       AudioContext context, MediaStreamAudioSourceOptions options);
 }
@@ -1152,9 +1153,9 @@ abstract class MediaStreamTrackAudioSourceNode implements AudioNode {
 @anonymous
 @JS()
 abstract class MediaStreamAudioSourceOptions {
-  external MediaStreamJs get mediaStream;
-  external set mediaStream(MediaStreamJs v);
-  external factory MediaStreamAudioSourceOptions({MediaStreamJs mediaStream});
+  external MediaStream get mediaStream;
+  external set mediaStream(MediaStream v);
+  external factory MediaStreamAudioSourceOptions({MediaStream mediaStream});
 }
 
 @anonymous

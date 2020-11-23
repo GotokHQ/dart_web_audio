@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.12"
-  dart_webrtc:
-    dependency: "direct main"
-    description:
-      name: dart_webrtc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.3"
   http:
     dependency: "direct dev"
     description:
@@ -100,4 +93,4 @@ packages:
     source: hosted
     version: "1.1.6"
 sdks:
-  dart: ">=2.9.3 <3.0.0"
+  dart: ">=2.6.0 <3.0.0"
